@@ -20,13 +20,15 @@ module.exports = async (req, res) => {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash"
+    });
 
     const result = await model.generateContent(message);
     const reply = result.response.text();
 
     res.status(200).json({ reply });
   } catch (e) {
-    res.status(500).json({ error: "Gemini error" });
+    res.status(500).json({ error: e.message });
   }
 };
